@@ -1,41 +1,38 @@
 class Location
-
-  def name()
+  def initialize(name)
     @name = name
   end
-
-
-end
-
-class Trip
-
-#Create a Trip class with an array of Location instances (called stops or destinations
-#or something similar). Define a method that lets you add locations to the trip's list of destinations.
-
-  def stops(name)
-    @stops = []
-    @stops << Location.new(name)
-    #why not Trip.new....I'm in the Trip class.
-  end
-
-  def self.start
-    puts "Begin trip"
-    @stops.each_with_index do |stop, i|
-      if @stops[i+1] == nil
-        puts "Ended Trip"
-      else
-      puts "Travelled from #{stop.name} to #{@stopsdestinations[i+1].name}."
-    end
-    end
+  def name
+    @name
   end
 end
+
+class Trip < Location
+  def initialize
+    @locations = []
+  end
+
+  def add(name)
+    location = Location.new(name)
+    @locations << location
+    return location
+  end
+
+
+  def travels
+    puts 'Began trip'
+    @locations.each_cons(2) do |location|
+      puts "Travelled from #{location[0].name} to #{location[1].name}"
+
+    end
+    puts 'Ended trip'
+  end
 end
 
-#Make several instances of Locations and add them to an instance of Trip.
+trip1= Trip.new
+trip1.add('Toronto')
+trip1.add('Ottawa')
+trip1.add('Montreal')
+trip1.add('Quebec City')
 
-omair_trip = Trip.new()
-Trip.new("Houston")
-Trip.new("NY")
-Trip.new("Saint Johns")
-Trip.new("Calgary")
-Trip.new("Bamf")
+trip1.travels
